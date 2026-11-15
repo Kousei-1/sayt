@@ -1,0 +1,232 @@
+HTML
+<!DOCTYPE html>
+<html lang="uz" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime UZ — Sevimli Animelaringizni Onlayn Tomosha Qiling</title>
+  
+  <!-- Tailwind CSS & Lucide Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff1f2',
+              500: '#f43f5e',
+              600: '#e11d48',
+              700: '#be123c',
+              900: '#881337',
+            },
+            dark: {
+              bg: '#0f172a',
+              card: '#1e293b',
+              border: '#334155'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    .glass {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #f43f5e;
+    }
+  </style>
+</head>
+<body class="bg-[#0b0f19] text-gray-100 font-sans antialiased custom-scrollbar">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-purple-600 flex items-center justify-center font-black text-xl text-white shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform">
+          A
+        </div>
+        <span class="text-xl font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+          ANIME<span class="text-brand-500">.UZ</span>
+        </span>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="flex-1 max-w-md hidden md:block relative">
+        <input 
+          type="text" 
+          id="searchInput"
+          oninput="handleSearch(this.value)"
+          placeholder="Anime, qahramon yoki janr qidirish..." 
+          class="w-full bg-slate-900/90 text-sm text-gray-200 placeholder-gray-500 rounded-full pl-10 pr-4 py-2 border border-slate-700/60 focus:outline-none focus:border-brand-500 transition-colors"
+        >
+        <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3.5 top-3"></i>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-4">
+        <button class="bg-brand-600 hover:bg-brand-500 text-white px-5 py-2 rounded-full font-medium text-sm transition-all shadow-md shadow-brand-600/20 active:scale-95">
+          Kirish
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Layout -->
+  <main class="pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    
+    <!-- Hero Banner Carousel -->
+    <section class="relative rounded-3xl overflow-hidden mb-12 border border-slate-800 shadow-2xl">
+      <div id="heroBg" class="absolute inset-0 bg-cover bg-center transition-all duration-700 scale-105" style="background-image: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1200&auto=format&fit=crop');"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-[#0b0f19]/70 to-transparent"></div>
+      
+      <div class="relative z-10 p-6 sm:p-12 min-h-[420px] flex flex-col justify-end max-w-2xl">
+        <span id="heroBadge" class="inline-block px-3 py-1 bg-brand-600/90 text-white font-semibold text-xs rounded-full mb-3 w-max tracking-wide uppercase">
+          Trendda #1
+        </span>
+        <h1 id="heroTitle" class="text-3xl sm:text-5xl font-extrabold text-white mb-3 tracking-tight leading-tight">
+          Demon Slayer: Hashira Training Arc
+        </h1>
+        <p id="heroDesc" class="text-gray-300 text-sm sm:text-base mb-6 line-clamp-2">
+          Tanjiro va boshqa Hashiralar kelajakdagi shafqatsiz janglarga tayyorgarlik ko'rishmoqda. Ulug'vor mashg'ulotlar boshlanadi!
+        </p>
+        <div class="flex items-center gap-4">
+          <button onclick="openModal('Demon Slayer', 'https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1200&auto=format&fit=crop')" class="bg-brand-600 hover:bg-brand-500 text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 shadow-lg shadow-brand-600/30 transition-transform hover:scale-105">
+            <i data-lucide="play" class="w-5 h-5 fill-current"></i> Tomosha Qilish
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Filter -->
+    <section class="mb-8 flex items-center justify-between flex-wrap gap-4">
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar w-full sm:w-auto">
+        <button onclick="filterAnime('all')" class="cat-btn active bg-brand-600 text-white px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors">Barchasi</button>
+        <button onclick="filterAnime('action')" class="cat-btn bg-slate-800 text-gray-300 hover:bg-slate-700 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors">Jangari</button>
+        <button onclick="filterAnime('fantasy')" class="cat-btn bg-slate-800 text-gray-300 hover:bg-slate-700 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors">Fentezi</button>
+        <button onclick="filterAnime('romance')" class="cat-btn bg-slate-800 text-gray-300 hover:bg-slate-700 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors">Romantika</button>
+        <button onclick="filterAnime('dubbed')" class="cat-btn bg-slate-800 text-gray-300 hover:bg-slate-700 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors">O'zbekcha Dublyaj</button>
+      </div>
+    </section>
+
+    <!-- Anime Grid -->
+    <section class="mb-16">
+      <div id="animeGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+        <!-- Anime cards generated by JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Video Player Modal -->
+  <div id="playerModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="bg-slate-900 border border-slate-800 w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl relative flex flex-col">
+      <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+        <h3 id="modalTitle" class="font-bold text-lg text-white">Anime Title</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      
+      <!-- Player Wrapper -->
+      <div class="relative bg-black aspect-video flex items-center justify-center group">
+        <img id="modalPoster" class="w-full h-full object-cover opacity-60" src="" alt="Poster">
+        <button class="absolute w-16 h-16 bg-brand-600 rounded-full flex items-center justify-center text-white shadow-xl hover:scale-110 transition-transform">
+          <i data-lucide="play" class="w-8 h-8 fill-current ml-1"></i>
+        </button>
+      </div>
+
+      <!-- Episode Controls -->
+      <div class="p-4 bg-slate-950 flex flex-wrap gap-2 items-center justify-between">
+        <span class="text-sm text-gray-400">Qismlar:</span>
+        <div class="flex gap-2 overflow-x-auto py-1">
+          <button class="px-3 py-1 bg-brand-600 text-white text-xs rounded-lg font-bold">1-Qism</button>
+          <button class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-gray-300 text-xs rounded-lg font-bold">2-Qism</button>
+          <button class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-gray-300 text-xs rounded-lg font-bold">3-Qism</button>
+          <button class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-gray-300 text-xs rounded-lg font-bold">4-Qism</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Sample Anime Data
+    const animelist = [
+      { id: 1, title: 'Solo Leveling', cat: 'action', rating: '9.8', ep: '12-qism', img: 'https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=500&auto=format&fit=crop' },
+      { id: 2, title: 'Jujutsu Kaisen', cat: 'action', rating: '9.6', ep: '24-qism', img: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=500&auto=format&fit=crop' },
+      { id: 3, title: 'Your Lie in April', cat: 'romance', rating: '9.5', ep: '22-qism', img: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=500&auto=format&fit=crop' },
+      { id: 4, title: 'Attack on Titan', cat: 'fantasy', rating: '9.9', ep: 'Final', img: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=500&auto=format&fit=crop' },
+      { id: 5, title: 'Naruto Shippuden', cat: 'dubbed', rating: '9.4', ep: '500-qism', img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=500&auto=format&fit=crop' },
+    ];
+
+    function renderGrid(items) {
+      const grid = document.getElementById('animeGrid');
+      grid.innerHTML = items.map(item => `
+        <div onclick="openModal('${item.title}', '${item.img}')" class="group bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden cursor-pointer hover:border-brand-500/50 transition-all duration-300 hover:-translate-y-1 shadow-lg">
+          <div class="relative aspect-[3/4] overflow-hidden">
+            <img src="${item.img}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 rounded-lg text-xs font-bold text-yellow-400 flex items-center gap-1">
+              ★ ${item.rating}
+            </div>
+            <div class="absolute bottom-2 left-2 bg-brand-600/90 px-2 py-0.5 rounded text-[10px] font-bold text-white">
+              ${item.ep}
+            </div>
+          </div>
+          <div class="p-3">
+            <h4 class="font-bold text-gray-100 text-sm truncate group-hover:text-brand-500 transition-colors">${item.title}</h4>
+            <p class="text-xs text-gray-400 capitalize mt-1">${item.cat}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterAnime(category) {
+      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('bg-brand-600', 'text-white'));
+      if (category === 'all') {
+        renderGrid(animelist);
+      } else {
+        renderGrid(animelist.filter(a => a.cat === category));
+      }
+    }
+
+    function handleSearch(query) {
+      const filtered = animelist.filter(a => a.title.toLowerCase().includes(query.toLowerCase()));
+      renderGrid(filtered);
+    }
+
+    function openModal(title, img) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalPoster').src = img;
+      document.getElementById('playerModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('playerModal').classList.add('hidden');
+    }
+
+    // Initial Render
+    renderGrid(animelist);
+  </script>
+</body>
+</html>
